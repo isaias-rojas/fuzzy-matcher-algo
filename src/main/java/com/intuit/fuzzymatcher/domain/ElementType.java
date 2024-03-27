@@ -21,7 +21,9 @@ public enum ElementType {
     EMAIL,
     PHONE,
     NUMBER,
+    PHONE_NUMBER,
     DATE,
+    PATH,
     AGE;
 
     protected Function getPreProcessFunction() {
@@ -39,6 +41,10 @@ public enum ElementType {
             case NUMBER:
             case AGE:
                 return numberPreprocessing();
+            case PATH:
+                return pathPrepFunction();
+            case PHONE_NUMBER:
+                return genericPhoneNumberPreprocessor();
             default:
                 return none();
         }
@@ -56,6 +62,10 @@ public enum ElementType {
                 return triGramTokenizer();
             case PHONE:
                 return decaGramTokenizer();
+            case PATH:
+                return pathTokenizer();
+            case PHONE_NUMBER:
+                return phoneNumberTokenizer();
             default:
                 return valueTokenizer();
         }
