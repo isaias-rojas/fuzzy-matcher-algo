@@ -141,4 +141,70 @@ public class PhoneAndPathTest {
 
         Assert.assertEquals(List.of(""), tokens);
     }
+    @Test
+    public void testPathPreprocessor() {
+        String path = "C:\\Users\\John\\Documents";
+        String preprocessedPath = pathPrepFunction().apply(path);
+        Assert.assertEquals("c:/users/john/documents", preprocessedPath);
+    }
+
+    @Test
+    public void testPathTokenizer() {
+        Element<String> element = new Element.Builder<String>()
+                .setType(PATH)
+                .setValue("path/to/file.txt")
+                .createElement();
+        List<String> tokens = pathTokenizer().apply(element)
+                .map(Token::getValue)
+                .collect(Collectors.toList());
+        Assert.assertEquals(List.of("path", "to", "file", "txt"), tokens);
+    }
+
+    @Test
+    public void itShouldPreprocessPhoneNumber_RemoveNonNumericChars() {
+        String phoneNumber = "+1 (555) 123-4567";
+        String preprocessedPhoneNumber = PreProcessFunction.genericPhoneNumberPreprocessor().apply(phoneNumber);
+        Assert.assertEquals("15551234567", preprocessedPhoneNumber);
+    }
+
+    @Test
+    public void itShouldPreprocessPhoneNumber_HandleDifferentFormats() {
+        List<String> phoneNumbers = List.of(
+                "1234567890",
+                "(123) 456-7890",
+                "123-456-7890",
+                "123.456.7890",
+                "1234567890x1234"
+        );
+
+        List<String> expectedPreprocessedPhoneNumbers = List.of(
+                "1234567890",
+                "1234567890",
+                "1234567890",
+                "1234567890",
+                "12345678901234"
+        );
+
+        List<String> actualPreprocessedPhoneNumbers = phoneNumbers.stream()
+                .map(PreProcessFunction.genericPhoneNumberPreprocessor())
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(expectedPreprocessedPhoneNumbers, actualPreprocessedPhoneNumbers);
+    }
+
+    @Test
+    public void itShouldTokenizePhoneNumber_SingleToken() {
+        String phoneNumber = "1234567890";
+        Element<String> element = new Element.Builder<String>()
+                .setType(PHONE_NUMBER)
+                .setValue(phoneNumber)
+                .createElement();
+
+        List<String> tokens = TokenizerFunction.phoneNumberTokenizer()
+                .apply(element)
+                .map(Token::getValue)
+                .collect(Collectors.toList());
+
+        Assert.assertEquals(List.of("1234567890"), tokens);
+    }
 }
