@@ -149,4 +149,24 @@ public class PreProcessFunction<T>{
     public static Function none() {
         return obj -> obj;
     }
+
+    /**
+     * Preprocesses a path by converting it to lowercase and replacing backslashes with forward slashes.
+     *
+     * @param
+     * @return the preprocessed path
+     */
+    public static Function<String, String> pathPrepFunction() {
+        return path -> path.toLowerCase().replace("\\", "/");
+    }
+
+    /**
+     * Preprocesses a phone number by removing all non-numeric characters.
+     *
+     * @param
+     * @return the preprocessed phone number containing only digits
+     */
+    public static Function<String, String> genericPhoneNumberPreprocessor() {
+        return str -> str.replaceAll("\\D", "");
+    }
 }
