@@ -1,10 +1,10 @@
 ﻿cellphone_id,brand,model,operating system,internal memory,RAM,performance,main camera,selfie camera,battery size,screen size,weight,price,release date
-0,Apple,iPhone SE (2022),iOS,128,4,7.23,12,7,2018,4.7,144,429,18/03/2022
 1,Apple,iPhone 13 Mini,iOS,128,4,7.72,12,12,2438,5.4,141,699,24/09/2021
 2,Apple,iPhone 13,iOS,128,4,7.75,12,12,3240,6.1,174,699,24/09/2021
 3,Apple,iPhone 13 Pro,iOS,256,6,7.94,12,12,3065,6.1,204,999,24/09/2021
 4,Apple,iPhone 13 Pro Max,iOS,256,6,8.01,12,12,4352,6.7,240,1199,24/09/2021
-5,Apple,iPhone XR,iOS,64,3,4.22,12,7,2942,6.1,194,236,26/10/2018
+5,Apple,iPhone XR,iOS,64,3,4.22,12,7,2942,6.1,194,236,26/10/20180,Apple,iPhone SE (2022),iOS,128,4,7.23,12,7,2018,4.7,144,429,18/03/2022
+
 6,Asus,Zenfone 8,Android,128,8,6.76,64,12,4000,5.9,169,599,12/05/2021
 7,Samsung,Galaxy A13,Android,32,3,1.36,50,8,5000,6.6,196,154,23/03/2022
 8,Samsung,Galaxy A32,Android,64,4,2.2,48,13,5000,6.5,205,199,22/01/2021

@@ -1,6 +1,6 @@
 user_id,age,gender,occupation
 0,38,Female,Data analyst
-1,40,Female,team worker in it
+1,40,Female,IT
 6,55,Female,IT
 8,25,Female,Manager
 10,23,Male,worker
@@ -11,9 +11,9 @@ user_id,age,gender,occupation
 26,28,Female,FINANCE
 27,29,Female,Finance
 28,33,Female,Sales
-29,61,Female,Ops Manager
+29,61,Female,Manager
 30,34,Male,ICT Officer
-32,39,Male,QA Software Manager
+32,39,Male,QA
 33,30,Female,Healthcare
 35,41,Male,self employed
 36,42,Male,banking
@@ -29,9 +29,9 @@ user_id,age,gender,occupation
 84,33,Male,Warehousing
 85,33,Female,Sales
 91,34,Male,WEB DESIGN
-95,28,Male,Information Technology
+95,28,Male,IT
 98,25,Female,Technical Engineer
-99,30,Male,information
+99,30,Male,IT
 100,43,Female,IT
 104,32,Male,Administrator
 105,25,Female,System Administrator
@@ -43,15 +43,15 @@ user_id,age,gender,occupation
 114,46,Male,technician
 115,37,Female,homemaker
 116,32,Male,teacher
-119,49,Female,president transportation company
+119,49,Female,CEO
 120,50,Female,manager
 123,32,Male,manager
 124,50,Female,manager
-126,27,Female,Information Technology
+126,27,Female,IT
 128,50,Female,manager
-129,61,Female,Information Technology
-137,29,Female,Information Technology
-140,29,Male,Information Technology
+129,61,Female,IT
+137,29,Female,IT
+140,29,Male,IT
 142,32,Male,manager
 143,32,Male,manager
 144,38,-Select Gender-,ADMINISTRATIVE OFFICER
@@ -70,12 +70,12 @@ user_id,age,gender,occupation
 200,48,Male,IT
 203,38,Female,IT
 204,30,Female,Administrative officer
-208,29,Male,Information Technology
+208,29,Male,IT
 211,37,Female,SALES MANAGER
 215,42,Female,Purchase Manager
-226,27,Female,Information Technology
-227,32,Male,Information technology
-230,29,Female,Information Technology
+226,27,Female,IT
+227,32,Male,IT
+230,29,Female,IT
 231,58,Male,ADMINISTRATIVE OFFICER
 232,46,Male,writer
 233,31,Male,construction
@@ -92,9 +92,8 @@ user_id,age,gender,occupation
 246,45,Female,MANAGER
 251,39,Male,Computer technician
 252,58,Male,ADMINISTRATIVE OFFICER
-253,40,Female,Information Technology
+253,40,Female,IT
 254,25,Female,software developer
 255,25,Male,software developer
-256,49,Male,Information Technology
-257,25,Female,Manager
+256,49,Male,IT
 258,25,Male,Executive Manager
