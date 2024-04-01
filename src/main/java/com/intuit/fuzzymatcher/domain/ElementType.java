@@ -24,7 +24,10 @@ public enum ElementType {
     PHONE_NUMBER,
     DATE,
     PATH,
-    AGE;
+    AGE,
+    OCCUPATION,
+    RELEASE_DATE,
+    GENDER;
 
     protected Function getPreProcessFunction() {
         switch (this) {
@@ -45,6 +48,12 @@ public enum ElementType {
                 return pathPrepFunction();
             case PHONE_NUMBER:
                 return genericPhoneNumberPreprocessor();
+            case OCCUPATION:
+                return occupationNormalization();
+            case RELEASE_DATE:
+                return releaseDateNormalization();
+            case GENDER:
+                return genderNormalization();
             default:
                 return none();
         }
@@ -66,6 +75,10 @@ public enum ElementType {
                 return pathTokenizer();
             case PHONE_NUMBER:
                 return phoneNumberTokenizer();
+            case RELEASE_DATE:
+                return releaseDateTokenizer();
+            case GENDER:
+                return genderTokenizer();
             default:
                 return valueTokenizer();
         }

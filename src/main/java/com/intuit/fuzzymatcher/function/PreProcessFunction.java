@@ -4,6 +4,8 @@ import com.intuit.fuzzymatcher.component.Dictionary;
 import com.intuit.fuzzymatcher.util.Utils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -168,5 +170,62 @@ public class PreProcessFunction<T>{
      */
     public static Function<String, String> genericPhoneNumberPreprocessor() {
         return str -> str.replaceAll("\\D", "");
+    }
+
+    /**
+     * Preprocesses the occupation of users to ensure consistency in data, removing special characters and converting all letters to lowercase.
+     *
+     * @return the function to perform occupationNormalization
+     */
+    public static Function<String, String> occupationNormalization() {
+        return (str) -> removeSpecialChars().andThen(toLowerCase()).apply(str);
+    }
+
+    /**
+     * Preprocesses the release date of cell phones to ensure consistency in data, converting the date to a standard format "YYYY-MM-DD".
+     *
+     * @return the function to perform releaseDateNormalization
+     */
+    public static Function<String, String> releaseDateNormalization() {
+        return str -> {
+            LocalDate date = null;
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            String[] possibleFormats = {"dd/MM/yyyy", "dd-MM-yyyy", "yyyy/MM/dd", "yyyy-MM-dd"};
+
+            for (String format : possibleFormats) {
+                try {
+                    date = LocalDate.parse(str, DateTimeFormatter.ofPattern(format));
+                    break;
+                } catch (Exception e) {
+                    // Parsing failed with this format, try the next one
+                }
+            }
+
+            if (date != null) {
+                return date.format(outputFormatter);
+            } else {
+                return str;
+            }
+        };
+    }
+
+    /**
+     * Preprocesses the gender of users to ensure consistency in data, converting all entries to a standard format,
+     * such as "male", "female", or "other".
+     *
+     * @return the function to perform genderNormalization
+     */
+    public static Function<String, String> genderNormalization() {
+        return (str) -> {
+            str = str.toLowerCase();
+            if (str.equals("m") || str.equals("male")) {
+                return "masculino";
+            } else if (str.equals("f") || str.equals("female")) {
+                return "femenino";
+            } else {
+                return "otro";
+            }
+        };
     }
 }

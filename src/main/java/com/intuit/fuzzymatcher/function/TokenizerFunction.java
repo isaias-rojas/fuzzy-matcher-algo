@@ -85,4 +85,44 @@ public class TokenizerFunction {
     public static Function<Element<String>, Stream<Token<String>>> phoneNumberTokenizer() {
         return element -> Stream.of(new Token<>(element.getPreProcessedValue(), element));
     }
+
+    /**
+     * Tokenizes the release date of cell phones to allow comparison based on time categories and facilitate identifying similarities between dates.
+     * @return a stream of tokens representing different components of the release date
+     */
+    public static Function<Element<String>, Stream<Token<String>>> releaseDateTokenizer() {
+        return element -> {
+            String dateStr = element.getPreProcessedValue();
+            String[] parts = dateStr.split("-");
+            if (parts.length != 3) {
+                return Stream.of(new Token<>(dateStr, element));
+            }
+            String year = parts[0];
+            String month = parts[1];
+            String day = parts[2];
+            return Stream.of(new Token<>(year, element), new Token<>(month, element), new Token<>(day, element));
+        };
+    }
+
+    /**
+     * Tokenizes the gender of users to allow comparison based on categories, assigning a numerical or categorical value to each gender.
+     * @return a stream containing a single token representing the gender
+     */
+    public static Function<Element<String>, Stream<Token<String>>> genderTokenizer() {
+        return element -> {
+            String gender = element.getPreProcessedValue().toLowerCase();
+            String tokenValue;
+            switch (gender) {
+                case "femenino":
+                    tokenValue = "1";
+                    break;
+                case "masculino":
+                    tokenValue = "2";
+                    break;
+                default:
+                    tokenValue = "0";
+            }
+            return Stream.of(new Token<>(tokenValue, element));
+        };
+    }
 }
