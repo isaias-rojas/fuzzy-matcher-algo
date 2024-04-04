@@ -4,6 +4,7 @@ import com.intuit.fuzzymatcher.domain.Element;
 import com.intuit.fuzzymatcher.domain.Match;
 import com.intuit.fuzzymatcher.domain.Token;
 import org.apache.commons.lang3.BooleanUtils;
+import com.intuit.fuzzymatcher.Algoritmo.LevenshteinDistance;
 
 import java.util.*;
 
@@ -14,6 +15,7 @@ public class ElementMatch {
     public ElementMatch() {
         this.tokenRepo = new TokenRepo();
     }
+
 
     public Set<Match<Element>> matchElement(Element element) {
         Set<Match<Element>> matchElements = new HashSet<>();

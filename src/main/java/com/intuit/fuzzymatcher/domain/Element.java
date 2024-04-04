@@ -3,6 +3,7 @@ package com.intuit.fuzzymatcher.domain;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -39,8 +40,11 @@ public class Element<T> implements Matchable {
     private Function<Element<T>, Stream<Token>> tokenizerFunction;
     private List<Token> tokens;
     private MatchType matchType;
+    private HashMap<Double, Element> scores = new HashMap<>();
 
     private T preProcessedValue;
+
+
 
     public Element(ElementType type, String variance, T value, double weight, double threshold,
                    double neighborhoodRange, Function<T, T> preProcessFunction,
@@ -91,6 +95,8 @@ public class Element<T> implements Matchable {
     public Function<T, T> getPreProcessFunction() {
         return this.preProcessFunction;
     }
+
+   
 
     public T getPreProcessedValue() {
         if (this.preProcessedValue == null) {
@@ -162,6 +168,11 @@ public class Element<T> implements Matchable {
         return null;
     }
 
+    public void addScore(Double score, Element element) {
+        scores.put(score, element);
+    }
+
+
     public static class Builder<T> {
         private ElementType type;
         private String variance;
@@ -224,6 +235,8 @@ public class Element<T> implements Matchable {
         public Element createElement() {
             return new Element<T>(type, variance, value, weight, threshold, neighborhoodRange, preProcessFunction, tokenizerFunction, matchType);
         }
+        
+        
     }
 
     @Override
