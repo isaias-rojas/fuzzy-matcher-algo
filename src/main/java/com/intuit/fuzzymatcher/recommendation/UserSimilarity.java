@@ -1,7 +1,9 @@
 package com.intuit.fuzzymatcher.recommendation;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +16,7 @@ import com.intuit.fuzzymatcher.domain.ElementType;
 
 
 public class UserSimilarity {
-        private List<User> users;
+    private List<User> users;
     private MatchService matchService;
 
     public UserSimilarity(List<User> users) {
@@ -22,33 +24,30 @@ public class UserSimilarity {
         this.matchService = new MatchService();
     }
 
-    public List<User> findTopSimilarUsers(User user, int topN) {
+    public List<UserSimilarityResult> findTopSimilarUsers(User user, int topN) {
         List<Document> documents = convertUsersToDocuments(users);
         Document userDocument = convertUserToDocument(user);
-    
         if (userDocument == null) {
             return Collections.emptyList();
         }
-    
+
         Map<String, List<Match<Document>>> matchesByDocId = matchService.applyMatchByDocId(userDocument, documents);
         List<Match<Document>> matches = matchesByDocId.getOrDefault(userDocument.getKey(), Collections.emptyList());
-    
         if (matches.isEmpty()) {
             return Collections.emptyList();
         }
-    
-        List<User> sortedUsers = matches.stream()
+
+        List<UserSimilarityResult> sortedUsers = matches.stream()
                 .filter(match -> !match.getMatchedWith().getKey().equals(userDocument.getKey())) // Exclude the target user
-                .sorted(Comparator.comparingDouble(match -> ((Match<Document>) match).getScore().getResult()).reversed())
-                .map(match -> convertDocumentToUser(match.getMatchedWith()))
+                .map(match -> new UserSimilarityResult(convertDocumentToUser(match.getMatchedWith()), match.getScore().getResult()))
+                .sorted(Comparator.comparingDouble(UserSimilarityResult::getScore).reversed())
                 .collect(Collectors.toList());
-    
+
         int availableSimilarUsers = sortedUsers.size();
-    
         if (topN >= availableSimilarUsers) {
-            return sortedUsers; 
+            return sortedUsers;
         } else {
-            return sortedUsers.subList(0, topN); 
+            return sortedUsers.subList(0, topN);
         }
     }
 
@@ -85,5 +84,6 @@ public class UserSimilarity {
                 .orElse(null);
         return new User(userId, age, gender, occupation);
     }
+
     
 }

@@ -3,7 +3,6 @@ package com.intuit.fuzzymatcher.recommendation;
 import java.util.List;
 
 public class UserSimilarityWithLoadedDataTest {
-    
     private UserSimilarity userSimilarity;
     private List<User> users;
 
@@ -17,10 +16,10 @@ public class UserSimilarityWithLoadedDataTest {
     private void testFindTopSimilarUsersWithLoadedData() {
         User targetUser = users.get(0);
         int topN = 5;
-        List<User> topSimilarUsers = userSimilarity.findTopSimilarUsers(targetUser, topN);
+        List<UserSimilarityResult> topSimilarUsers = userSimilarity.findTopSimilarUsers(targetUser, topN);
         System.out.println("Top " + topN + " similar users for user " + targetUser.getUserId() + ":");
-        for (User user : topSimilarUsers) {
-            System.out.println(user);
+        for (UserSimilarityResult result : topSimilarUsers) {
+            System.out.println("User: " + result.getUser() + ", Similarity Score: " + result.getScore());
         }
     }
 
