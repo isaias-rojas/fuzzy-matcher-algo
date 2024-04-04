@@ -85,8 +85,6 @@ public enum ElementType {
                 return wordTokenizer();
             case RELEASE_DATE:
                 return releaseDateTokenizer();
-            case GENDER:
-                return genderTokenizer();
             case TEXT_LEVENTH:
                 return wordTokenizer();
             default:
