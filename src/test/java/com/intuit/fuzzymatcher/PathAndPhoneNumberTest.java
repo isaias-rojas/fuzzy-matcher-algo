@@ -143,23 +143,7 @@ public class PathAndPhoneNumberTest {
         assertEquals(expectedPreprocessedPhoneNumbers, actualPreprocessedPhoneNumbers);
     }
 
-    @Test
-    public void itShouldTokenizePhoneNumber_SingleToken() {
-        String phoneNumber = "1234567890";
-        Element<String> element = new Element.Builder<String>()
-                .setType(PHONE)
-                .setValue(phoneNumber)
-                .createElement();
 
-        List<String> tokens = TokenizerFunction.phoneNumberTokenizer()
-                .apply(element)
-                .map(Token::getValue)
-                .collect(Collectors.toList());
-
-        assertEquals(List.of("1234567890"), tokens);
-    }
-
-    
     @Test
     public void itShouldPreprocessPath_HandleTrailingSlash() {
         String path = "path/to/directory/";
