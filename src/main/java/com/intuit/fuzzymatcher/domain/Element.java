@@ -97,7 +97,6 @@ public class Element<T> implements Matchable {
     }
 
 
-
     public T getPreProcessedValue() {
         if (this.preProcessedValue == null) {
             if (this.value instanceof String) {
@@ -235,8 +234,6 @@ public class Element<T> implements Matchable {
         public Element createElement() {
             return new Element<T>(type, variance, value, weight, threshold, neighborhoodRange, preProcessFunction, tokenizerFunction, matchType);
         }
-
-
     }
 
     @Override
