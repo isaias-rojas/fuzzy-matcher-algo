@@ -103,26 +103,4 @@ public class TokenizerFunction {
             return Stream.of(new Token<>(year, element), new Token<>(month, element), new Token<>(day, element));
         };
     }
-
-    /**
-     * Tokenizes the gender of users to allow comparison based on categories, assigning a numerical or categorical value to each gender.
-     * @return a stream containing a single token representing the gender
-     */
-    public static Function<Element<String>, Stream<Token<String>>> genderTokenizer() {
-        return element -> {
-            String gender = element.getPreProcessedValue().toLowerCase();
-            String tokenValue;
-            switch (gender) {
-                case "femenino":
-                    tokenValue = "1";
-                    break;
-                case "masculino":
-                    tokenValue = "2";
-                    break;
-                default:
-                    tokenValue = "0";
-            }
-            return Stream.of(new Token<>(tokenValue, element));
-        };
-    }
 }

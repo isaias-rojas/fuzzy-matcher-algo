@@ -25,6 +25,7 @@ public enum ElementType {
     DATE,
     PATH,
     AGE,
+    MODEL,
     OCCUPATION,
     RELEASE_DATE,
     GENDER;
@@ -48,6 +49,8 @@ public enum ElementType {
                 return pathPrepFunction();
             case PHONE_NUMBER:
                 return genericPhoneNumberPreprocessor();
+            case MODEL:
+                return removeSpecialChars();
             case OCCUPATION:
                 return occupationNormalization();
             case RELEASE_DATE:
@@ -75,10 +78,11 @@ public enum ElementType {
                 return pathTokenizer();
             case PHONE_NUMBER:
                 return phoneNumberTokenizer();
+            case MODEL:
+            case OCCUPATION:
+                return wordTokenizer();
             case RELEASE_DATE:
                 return releaseDateTokenizer();
-            case GENDER:
-                return genderTokenizer();
             default:
                 return valueTokenizer();
         }
