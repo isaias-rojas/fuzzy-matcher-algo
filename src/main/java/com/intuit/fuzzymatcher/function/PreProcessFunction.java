@@ -220,11 +220,11 @@ public class PreProcessFunction<T>{
         return (str) -> {
             str = str.toLowerCase();
             if (str.equals("m") || str.equals("male")) {
-                return "masculino";
+                return "male";
             } else if (str.equals("f") || str.equals("female")) {
-                return "femenino";
+                return "female";
             } else {
-                return "otro";
+                return "other";
             }
         };
     }
