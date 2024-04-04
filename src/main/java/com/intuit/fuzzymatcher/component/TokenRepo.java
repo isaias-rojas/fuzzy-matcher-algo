@@ -1,10 +1,7 @@
 package com.intuit.fuzzymatcher.component;
 
-import com.intuit.fuzzymatcher.domain.Element;
-import com.intuit.fuzzymatcher.domain.ElementClassification;
-import com.intuit.fuzzymatcher.domain.ElementType;
-import com.intuit.fuzzymatcher.domain.MatchType;
-import com.intuit.fuzzymatcher.domain.Token;
+import com.intuit.fuzzymatcher.Algoritmo.LevenshteinDistance;
+import com.intuit.fuzzymatcher.domain.*;
 import com.intuit.fuzzymatcher.exception.MatchException;
 
 import java.util.*;
@@ -13,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class TokenRepo {
 
+    Set<Element> matchElements;
     private Map<ElementClassification, Repo> repoMap;
 
     public TokenRepo() {
@@ -47,9 +45,11 @@ public class TokenRepo {
 
         TreeSet<Object> tokenBinaryTree;
 
+        LevenshteinDistance levenshteinDistance;
+
         private final Double AGE_PCT_OF = 10D;
         private final Double DATE_PCT_OF = 15777e7D; // 5 years of range
-
+        private int SIMILARITY_LEVENSHTEIN = 1000;
 
         Repo(MatchType matchType) {
             this.matchType = matchType;
@@ -57,7 +57,9 @@ public class TokenRepo {
                 case NEAREST_NEIGHBORS:
                     tokenBinaryTree = new TreeSet<>();
                 case EQUALITY:
+                case LEVENSHTEIN:
                     tokenElementSet = new ConcurrentHashMap<>();
+                    levenshteinDistance = new LevenshteinDistance();
             }
         }
 
@@ -66,6 +68,7 @@ public class TokenRepo {
                 case NEAREST_NEIGHBORS:
                     tokenBinaryTree.add(token.getValue());
                 case EQUALITY:
+                case LEVENSHTEIN:
                     Set<Element> elements = tokenElementSet.getOrDefault(token.getValue(), new HashSet<>());
                     elements.add(element);
                     tokenElementSet.put(token.getValue(), elements);
@@ -91,7 +94,22 @@ public class TokenRepo {
                     return tokenBinaryTree.subSet(tokenRange.lower, true, tokenRange.higher, true)
                             .stream()
                             .flatMap(val -> tokenElementSet.get(val).stream()).collect(Collectors.toSet());
-
+                case LEVENSHTEIN:
+                    matchElements = new HashSet<>();
+                    String wordOne = (String) token.getValue();
+                    for (Map.Entry<Object, Set<Element>> entry : tokenElementSet.entrySet()) {
+                        String wordTwo = (String) entry.getKey();
+                        double result = levenshteinDistance.compare(wordOne, wordTwo);
+                        if (result >= SIMILARITY_LEVENSHTEIN) {
+                            entry.getValue().forEach(element -> {
+                                if (element.getValue().equals(entry.getKey())) {
+                                    token.getElement().addScore(result, element);
+                                }
+                            });
+                            matchElements.addAll(tokenElementSet.get(entry.getKey()));
+                        }
+                    }
+                    return matchElements;
             }
             return null;
         }

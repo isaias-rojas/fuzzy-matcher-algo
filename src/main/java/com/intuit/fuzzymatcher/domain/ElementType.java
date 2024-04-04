@@ -2,10 +2,9 @@ package com.intuit.fuzzymatcher.domain;
 
 
 import java.util.function.Function;
-import java.util.stream.Stream;
 
-import static com.intuit.fuzzymatcher.domain.MatchType.EQUALITY;
-import static com.intuit.fuzzymatcher.domain.MatchType.NEAREST_NEIGHBORS;
+
+import static com.intuit.fuzzymatcher.domain.MatchType.*;
 import static com.intuit.fuzzymatcher.function.PreProcessFunction.*;
 import static com.intuit.fuzzymatcher.function.TokenizerFunction.*;
 
@@ -27,7 +26,8 @@ public enum ElementType {
     AGE,
     OCCUPATION,
     RELEASE_DATE,
-    GENDER;
+    GENDER,
+    TEXT_LEVENTH;
 
     protected Function getPreProcessFunction() {
         switch (this) {
@@ -54,6 +54,8 @@ public enum ElementType {
                 return releaseDateNormalization();
             case GENDER:
                 return genderNormalization();
+            case TEXT_LEVENTH:
+                return removeSpecialChars();
             default:
                 return none();
         }
@@ -79,6 +81,8 @@ public enum ElementType {
                 return releaseDateTokenizer();
             case GENDER:
                 return genderTokenizer();
+            case TEXT_LEVENTH:
+                return wordTokenizer();
             default:
                 return valueTokenizer();
         }
@@ -90,6 +94,8 @@ public enum ElementType {
             case DATE:
             case AGE:
                 return NEAREST_NEIGHBORS;
+            case TEXT_LEVENTH:
+                return LEVENSHTEIN;
             default:
                 return EQUALITY;
         }
