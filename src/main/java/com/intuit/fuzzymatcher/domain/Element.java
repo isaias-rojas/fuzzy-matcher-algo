@@ -96,7 +96,6 @@ public class Element<T> implements Matchable {
         return this.preProcessFunction;
     }
 
-   
 
     public T getPreProcessedValue() {
         if (this.preProcessedValue == null) {
@@ -235,8 +234,6 @@ public class Element<T> implements Matchable {
         public Element createElement() {
             return new Element<T>(type, variance, value, weight, threshold, neighborhoodRange, preProcessFunction, tokenizerFunction, matchType);
         }
-        
-        
     }
 
     @Override
@@ -267,4 +264,3 @@ public class Element<T> implements Matchable {
         return result;
     }
 }
-
